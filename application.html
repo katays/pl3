@@ -43,7 +43,9 @@
   
       <script>
 
-          //map layer and graphics layer added in to the map 
+          //map layer and graphics layer added in to the map
+          // reference for new api functions: add webmap, add legend and add Layer List from 
+          // https://developers.arcgis.com/javascript/latest/api-reference/
 
         require([
             "esri/config",
@@ -56,27 +58,25 @@
             "esri/widgets/LayerList"], function (esriConfig,Map, MapView,WebMap,Graphic,GraphicsLayer,Legend,LayerList) {
 
         //use api created for the tutorials
+        // api key referrer restricted to github repository 
   
           esriConfig.apiKey = "AAPK9199b1a2e0a54a8dbfd612c96d2090a4kQ9s2I9oBzwk0UxeqUZSLZJrEz4ju9XzVbG7RhwLz42e6A2_ADgIxJKWEDVOFnNu";
 
-
+        // id here is the webmap id from ArcGIS online Map viewer URL 
           const webmap = new WebMap({
         portalItem: {
         id: "e672a0972899484d923a7061397728a5"
          }
     });
 
-/************************************************************
- * Set the WebMap instance to the map property in a MapView.
- ************************************************************/
+// introduce instance of a webmap 
 const view = new MapView({
   map: webmap,
   container: "viewDiv"
 });
 
 view.when(() => {
-          // get the first layer in the collection of operational layers in the WebMap
-          // when the resources in the MapView have loaded.
+         // get the second layer which is the one that's labelled, the legend will only show now on this layer vs both 
           const featureLayer = webmap.layers.getItemAt(1);
 
           const legend = new Legend({
@@ -89,14 +89,15 @@ view.when(() => {
             ]
           });
 
-          // Add widget to the bottom right corner of the view
+          // // Add legend widget to the  bottom right corner of the view
           view.ui.add(legend, "bottom-right");
         });
-
+         
+         // creating the layer list 
         let layerList = new LayerList({
   view: view
 });
-// Adds widget below other elements in the top left corner of the view
+//// Add instance of the Layer list in the top left corner of the view
 view.ui.add(layerList, {
   position: "top-left"
 });
@@ -106,6 +107,7 @@ view.ui.add(layerList, {
   
     </head>
     <body>
+      <!-- Create div for holding the title block information and adding styling -->
       <div class = title>
       <h1 class = titlet>LEARNING CANADA'S PROVINCE AND TERRITORY NAMES</h1>
       <h3 class = subtitle> Use this application to learn the names of Canada's provinces! Start with the labelled layer 
@@ -114,6 +116,7 @@ view.ui.add(layerList, {
                             test your knowledge!
       </h3>
     </div>
+      <!-- webmap inserted here -->
       <div id="viewDiv"></div>
     </body>
   </html>
