@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+ <!-- modifying the basemap and adding a polygon-->
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+      <title>Learning Canada's Provinces</title>
+  
+      <style>
+        html,
+        body,
+        #viewDiv {
+          padding: 0;
+          margin-top:30px;
+          height: 100%;
+          width: 100%;
+          background-color: azure;
+        }
+
+        .title {
+          /* height:100px;
+          background-color: lightblue; */
+          text-align: center;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          font-weight:bold;
+          color:black;
+        }
+
+        .titlet {
+          margin-top:20px;
+        }
+
+        .subtitle {
+          width: 80%;
+          margin-left:150px;
+        }
+      </style>
+  
+      <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+      <script src="https://js.arcgis.com/4.22/"></script>
+  
+      <script>
+
+          //map layer and graphics layer added in to the map 
+
+        require([
+            "esri/config",
+            "esri/Map", 
+            "esri/views/MapView",
+            "esri/WebMap",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+            "esri/widgets/Legend",
+            "esri/widgets/LayerList"], function (esriConfig,Map, MapView,WebMap,Graphic,GraphicsLayer,Legend,LayerList) {
+
+        //use api created for the tutorials
+  
+          esriConfig.apiKey = "AAPK9199b1a2e0a54a8dbfd612c96d2090a4kQ9s2I9oBzwk0UxeqUZSLZJrEz4ju9XzVbG7RhwLz42e6A2_ADgIxJKWEDVOFnNu";
+
+
+          const webmap = new WebMap({
+        portalItem: {
+        id: "31900106f4674504bfb4bf21bb34a7b6"
+         }
+    });
+
+/************************************************************
+ * Set the WebMap instance to the map property in a MapView.
+ ************************************************************/
+const view = new MapView({
+  map: webmap,
+  container: "viewDiv"
+});
+
+view.when(() => {
+          // get the first layer in the collection of operational layers in the WebMap
+          // when the resources in the MapView have loaded.
+          const featureLayer = webmap.layers.getItemAt(1);
+
+          const legend = new Legend({
+            view: view,
+            layerInfos: [
+              {
+                layer: featureLayer,
+                title: "Province Names"
+              }
+            ]
+          });
+
+          // Add widget to the bottom right corner of the view
+          view.ui.add(legend, "bottom-right");
+        });
+
+        let layerList = new LayerList({
+  view: view
+});
+// Adds widget below other elements in the top left corner of the view
+view.ui.add(layerList, {
+  position: "top-left"
+});
+
+});
+      </script>
+  
+    </head>
+    <body>
+      <div class = title>
+      <h1 class = titlet>LEARNING CANADA'S PROVINCE NAMES</h1>
+      <h3 class = subtitle> Use this application to learn the names of Canada's provinces! Start with the labelled layer 
+                            to learn the province names. You can use the legend or zoom to the province. Then when you feel ready 
+                            turn off the "Provinces Labelled" layer to 
+                            test your knowledge!
+      </h3>
+    </div>
+      <div id="viewDiv"></div>
+    </body>
+  </html>
