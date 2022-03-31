@@ -46,16 +46,17 @@
 
     <script>
 
-      const apiKey = "AAPK9199b1a2e0a54a8dbfd612c96d2090a4kQ9s2I9oBzwk0UxeqUZSLZJrEz4ju9XzVbG7RhwLz42e6A2_ADgIxJKWEDVOFnNu";
-    //   const basemapEnum = "ArcGIS:Streets";
+      // add in my api key 
 
+      const apiKey = "AAPK9199b1a2e0a54a8dbfd612c96d2090a4kQ9s2I9oBzwk0UxeqUZSLZJrEz4ju9XzVbG7RhwLz42e6A2_ADgIxJKWEDVOFnNu";
+   // set map variable, minizoom is for mobile 
       const map = L.map("map", {
         minZoom: 2
+    // zoom set to cobourg beach 
       }).setView([43.9572, -78.1618], 12);
 
-    //   L.esri.Vector.vectorBasemapLayer(basemapEnum, {
-    //     apiKey: apiKey
-    //   }).addTo(map);
+   // set different basemap layer variables to later introduce the choice of which one the 
+   //   user wants to choose from 
 
     const basemapLayers = {
         Streets: L.esri.Vector.vectorBasemapLayer("ArcGIS:Streets", { apiKey: apiKey }).addTo(map),
@@ -64,7 +65,7 @@
         OSM: L.esri.Vector.vectorBasemapLayer("OSM:Standard", { apiKey: apiKey }).addTo(map),
         "OSM:Streets": L.esri.Vector.vectorBasemapLayer("OSM:Streets", { apiKey: apiKey }).addTo(map)
       };
-
+// allow user control of the basemap layer 
       L.control.layers(basemapLayers, null, { collapsed: false }).addTo(map);
     </script>
 
